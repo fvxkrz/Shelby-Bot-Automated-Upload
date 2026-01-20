@@ -2,6 +2,23 @@ import "dotenv/config";
 import { execSync } from "child_process";
 import fs from "fs";
 
+const keys = process.env.SHELBY_API_KEYS
+  ? process.env.SHELBY_API_KEYS.split(",").map(k => k.trim())
+  : [];
+
+if (keys.length === 0) {
+  console.error("❌ No Shelby API keys found in .env");
+  process.exit(1);
+}
+
+let index = 0;
+
+function getNextKey() {
+  const key = keys[index % keys.length];
+  index++;
+  return key;
+}
+
 function randomNumber(min = 100000, max = 9999999) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
