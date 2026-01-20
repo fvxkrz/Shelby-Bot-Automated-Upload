@@ -1,4 +1,4 @@
-# Shelby-Bot-Automated-Upload
+# Shelby-Bot
 This repository provides a step-by-step tutorial on how to automate data uploads to Shelby using:
 
 Shelby CLI,
