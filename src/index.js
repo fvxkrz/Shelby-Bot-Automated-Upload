@@ -1,26 +1,35 @@
+import "dotenv/config";
 import { execSync } from "child_process";
 import fs from "fs";
 
-const tmpFile = "/tmp/shelby-upload.json";
+function randomNumber(min = 100000, max = 9999999) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-const payload = {
-  message: "automation upload",
-  time: new Date().toISOString(),
-};
+function uploadOnce() {
+  const rand = randomNumber();
+  const filename = `hello-${rand}.txt`;
+  const tmpFile = "/tmp/shelby-auto.txt";
 
-fs.writeFileSync(tmpFile, JSON.stringify(payload, null, 2));
-
-const cmd = `
-shelby upload ${tmpFile} auto/${Date.now()}.json \
-  -e "in 7 days" \
-  --assume-yes
+  // isi file plain text
+  const content = `Hello
+This is an automated upload.
+File name: ${filename}
+Time: ${new Date().toISOString()}
 `;
 
-console.log("Running:", cmd);
+  fs.writeFileSync(tmpFile, content);
 
-execSync(cmd, {
-  stdio: "inherit",
-  env: process.env, // penting: pass SHELBY_API_KEY
-});
+  execSync(
+    `shelby upload ${tmpFile} auto/${filename} -e "in 7 days" --assume-yes`,
+    { stdio: "inherit", env: process.env }
+  );
 
-console.log("✅ upload sukses");
+  console.log("✅ Uploaded:", filename);
+}
+
+// 🔥 upload pertama langsung
+uploadOnce();
+
+// 🔁 upload tiap 10 menit
+setInterval(uploadOnce, 2 * 60 * 1000);
