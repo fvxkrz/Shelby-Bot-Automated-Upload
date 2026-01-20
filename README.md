@@ -1,3 +1,8 @@
 # Shelby-Bot-Automated-Upload
-This tutorial explains how to automate data uploads to Shelby using the Shelby CLI, Node.js, and cron, eliminating the need for manual uploads.
-RUN : node src/index.js  
+This repository provides a step-by-step tutorial on how to automate data uploads to Shelby using:
+
+Shelby CLI
+Node.js
+Cron (scheduler)
+
+The goal is to eliminate manual uploads and enable fully automated, recurring uploads.
